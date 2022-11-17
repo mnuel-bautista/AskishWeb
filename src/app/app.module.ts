@@ -9,10 +9,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { environment } from '../environments/environment';
 import { GruposComponent } from './grupos/grupos.component';
 import { SignupComponent } from './signup/signup.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import { Firebase } from './firebase/firebase';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NuevoGrupoComponent } from './grupos/nuevo-grupo/nuevo-grupo.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     LoginComponent,
     GruposComponent,
     SignupComponent,
+    NuevoGrupoComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,8 +36,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     ReactiveFormsModule,
     MatButtonModule,
     MatSidenavModule,
+    MatListModule, 
+    MatIconModule, 
+    MatDialogModule, 
   ],
-  providers: [],
+  providers: [Firebase],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

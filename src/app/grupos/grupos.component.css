@@ -1,0 +1,30 @@
+mat-drawer {
+    width: 326px;
+    height: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+}
+
+mat-drawer button {
+    width: 100%;
+}
+
+mat-drawer-content {
+    overflow-y: scroll;
+}
+
+mat-drawer-content button[mat-fab] {
+    position: fixed;
+    right: 10px;
+    bottom: 10px; 
+}
+
+.container-preguntas {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+

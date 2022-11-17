@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { AuthService } from '../auth.service';
 //import { addDoc, doc } from '@firebase/firestore';
 
@@ -57,13 +56,12 @@ export class SignupComponent implements OnInit {
     let password = this.passwordControl.value!;
 
     await this.auth.createUser(name, email, password)
-    .catch(() => {
-      alert("Ocurrió algún error")
+    .catch((error) => {
+      alert(error)
       return; 
     })
 
-    this.router.navigate(['../grupos'])
-
+    this.router.navigate(['/grupos'])
 
   }
 

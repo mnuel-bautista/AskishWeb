@@ -1,43 +1,64 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { initializeApp } from 'firebase/app';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { connectAuthEmulator, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getDocs } from '@firebase/firestore';
+import { getFirestore, collection, query, where, addDoc, connectFirestoreEmulator } from '@firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Firebase } from './firebase/firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private $isAuthenticated = new BehaviorSubject('false');
+  private firestore;
+
+  private $isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  private $currentUser = new BehaviorSubject('');
+
+  currentUser = this.$currentUser.asObservable()
 
   isAuthenticated = this.$isAuthenticated.asObservable();
 
-  private app = initializeApp(environment.firebase)
+  private auth;
 
-  private auth = getAuth(this.app)
-
-  constructor(/* private auth: Auth */private router: Router) {
+  constructor(private af: Firebase, private router: Router) {
+    this.auth = getAuth(af.app)
+    this.firestore = getFirestore(af.app)
+    connectAuthEmulator(this.auth, "http://localhost:9099")
+    connectFirestoreEmulator(this.firestore, 'localhost', 8080);
     this.auth.onAuthStateChanged((currentUser) => {
-      this.$isAuthenticated.next(currentUser?.displayName ?? "")
+      this.$isAuthenticated.next(currentUser != null)
+      this.$currentUser.next(currentUser?.displayName ?? "")
     })
   }
 
-  login(email: string, password: string) {
+  async login(email: string, password: string) {
     if (email != null && password != null) {
-      signInWithEmailAndPassword(this.auth, email, password)
-        .then((userCredential) => {
-          this.router.navigate(['../grupos'])
-        }).catch(() => {
+      await signInWithEmailAndPassword(this.auth, email, password)
+        .catch(() => {
           alert("Ocurrió algún error al iniciar sesión")
+          return
         })
+    
+
+      let userQuery = query(collection(this.firestore, 'usuarios'), where("email", "==", email))
+      let user = (await getDocs(userQuery)).docs[0]
+
+      localStorage.setItem('userId', user.id)
+
+      this.router.navigate(['/grupos'])
     }
   }
 
-  async createUser(displayName: string, email: string, password: string)  {
+  async createUser(displayName: string, email: string, password: string) {
     let userCredential = await createUserWithEmailAndPassword(this.auth, email, password)
-    await updateProfile(userCredential.user, {displayName: displayName})
+    await addDoc(collection(this.firestore, "usuarios"), {
+      "nombre": displayName,
+      "email": email,
+    })
+    await updateProfile(userCredential.user, { displayName: displayName })
   }
 
   signOut() {
