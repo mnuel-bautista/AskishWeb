@@ -17,7 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { Firebase } from './firebase/firebase';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NuevoGrupoComponent } from './grupos/nuevo-grupo/nuevo-grupo.component';
-
+import { NuevoCuestionarioComponent } from './cuestionarios/nuevo-cuestionario/nuevo-cuestionario.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +25,7 @@ import { NuevoGrupoComponent } from './grupos/nuevo-grupo/nuevo-grupo.component'
     GruposComponent,
     SignupComponent,
     NuevoGrupoComponent,
+    NuevoCuestionarioComponent,
   ],
   imports: [
     BrowserModule,

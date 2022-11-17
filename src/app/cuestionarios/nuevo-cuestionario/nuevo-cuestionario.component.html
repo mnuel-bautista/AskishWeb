@@ -1,0 +1,18 @@
+<div class="nuevo-cuestionario">
+    <p class="nuevo-cuestionario-titulo">Nuevo cuestionario</p>
+    <p class="nuevo-cuestionario-titulo">Comienza agregando un nombre al cuestionario</p>
+    <form>
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre cuestionario</mat-label>
+          <input [formControl]="nameFormControl" matInput #first>
+          <mat-hint>Ej. Preguntas de cultura general</mat-hint>
+        </mat-form-field>
+        <p>Seleccionar el grupo</p>
+        <mat-form-field appearance="fill">
+          <mat-label>Grupo</mat-label>
+          <input [formControl]="groupFormControl" matInput #last>
+          <mat-hint>Ej. Grupo 077CA</mat-hint>
+        </mat-form-field>
+        <button (click)="createQuizz()" mat-raised-button color="primary">CONTINUAR</button>
+      </form>
+</div>

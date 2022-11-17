@@ -5,6 +5,7 @@ import { getDocs } from '@firebase/firestore';
 import { getFirestore, collection, query, where, addDoc, connectFirestoreEmulator } from '@firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { Firebase } from './firebase/firebase';
+import { FirebaseService } from './services/firebase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,9 @@ export class AuthService {
 
   private auth;
 
-  constructor(private af: Firebase, private router: Router) {
-    this.auth = getAuth(af.app)
-    this.firestore = getFirestore(af.app)
-    connectAuthEmulator(this.auth, "http://localhost:9099")
-    connectFirestoreEmulator(this.firestore, 'localhost', 8080);
+  constructor(private af: FirebaseService, private router: Router) {
+    this.auth = af.auth
+    this.firestore = af.firestore
     this.auth.onAuthStateChanged((currentUser) => {
       this.$isAuthenticated.next(currentUser != null)
       this.$currentUser.next(currentUser?.displayName ?? "")
