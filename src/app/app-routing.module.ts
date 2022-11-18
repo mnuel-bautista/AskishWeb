@@ -4,14 +4,16 @@ import { LoginComponent } from './auth/login/login/login.component';
 import { NuevoCuestionarioComponent } from './cuestionarios/nuevo-cuestionario/nuevo-cuestionario.component';
 import { GruposComponent } from './grupos/grupos.component';
 import { UserAuthenticatedGuard } from './guards/user-authenticated.guard';
+import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/grupos', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'grupos', component: GruposComponent, canActivate: [UserAuthenticatedGuard] }, 
-  { path: 'cuestionarios/crear', component: NuevoCuestionarioComponent }
+  { path: 'grupos', component: GruposComponent, canActivate: [UserAuthenticatedGuard] },
+  { path: 'cuestionarios/crear', component: NuevoCuestionarioComponent },
+  { path: "sala", component: QuizzRoomComponent }
 ];
 
 @NgModule({

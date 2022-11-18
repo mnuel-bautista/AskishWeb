@@ -16,3 +16,38 @@ form {
     row-gap: 80px;
     width: 724px;
 }
+
+.nueva-pregunta {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    margin-top: 40px;
+    margin-left: 240px;
+}
+
+.nueva-pregunta form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    width: 724px;
+}
+
+
+.nueva-pregunta form mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    row-gap: 16px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 40px;
+    margin-bottom: 40px;
+}
+
+button {
+    width: 260px;
+}

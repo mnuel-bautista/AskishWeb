@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { connectAuthEmulator, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDocs } from '@firebase/firestore';
-import { getFirestore, collection, query, where, addDoc, connectFirestoreEmulator } from '@firebase/firestore';
+import { doc, collection, query, where, setDoc, connectFirestoreEmulator } from '@firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { Firebase } from './firebase/firebase';
 import { FirebaseService } from './services/firebase.service';
@@ -53,7 +53,8 @@ export class AuthService {
 
   async createUser(displayName: string, email: string, password: string) {
     let userCredential = await createUserWithEmailAndPassword(this.auth, email, password)
-    await addDoc(collection(this.firestore, "usuarios"), {
+    localStorage.setItem('userId', userCredential.user.uid)
+    await setDoc(doc(this.firestore, "usuarios", userCredential.user.uid), {
       "nombre": displayName,
       "email": email,
     })

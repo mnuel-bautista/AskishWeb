@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firebase } from './firebase';
 import { getFirestore, collection, query, where, getDocs, connectFirestoreEmulator } from '@firebase/firestore';
-import { addDoc } from '@firebase/firestore';
+import { addDoc, onSnapshot } from '@firebase/firestore';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Question, Quizz } from '../models/quizz.model';
@@ -67,21 +67,20 @@ export class FirestoreService {
       let ref = collection(this.firestore, 'grupos')
       let qr = query(ref, where("creador", "==", userId))
 
-      let res = (await getDocs(qr)).docs
-      console.log(res)
-      let grupos = res.map((element) => {
-        let groupId = element.id as string;
-        let name = element.get('nombre') as string
-        let code = element.get('codigo') as string
-        let creator = element.get('creator') as string
-
-        return { groupId, code, creator, name } as Group 
+      onSnapshot(qr, (snapshot) => {
+        let docs = snapshot.docs
+        let grupos = docs.map((element) => {
+          let groupId = element.id as string;
+          let name = element.get('nombre') as string
+          let code = element.get('codigo') as string
+          let creator = element.get('creator') as string
+  
+          return { groupId, code, creator, name }
+        })
+  
+        this.$grupos.next(grupos)
       })
-
-      console.log(grupos)
-      this.$grupos.next(grupos)
     }
-
   }
 
   async getAllQuizzesByGroup(groupId: string): Promise<Quizz[]> {

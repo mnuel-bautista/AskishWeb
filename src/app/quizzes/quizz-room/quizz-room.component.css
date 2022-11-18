@@ -1,0 +1,41 @@
+p {
+    margin: 0px; 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 48px 156px;
+}
+
+.container h1,
+h2 {
+    width: 100%;
+    text-align: center;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0px; 
+    padding: 0px; 
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    width: 12.25rem;
+    height: 3.75rem;
+}
