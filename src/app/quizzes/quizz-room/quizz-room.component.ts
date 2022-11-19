@@ -46,9 +46,13 @@ export class QuizzRoomComponent implements OnInit {
     let quizzRoomId = localStorage.getItem('quizzRoomId')!
     if(this.quizz?.questions.length ?? 0 > 0) {
       let cq = this.quizz?.questions[this.currentQuestion]!;
-      await this.quizzRoomService.setQuestion(cq, quizzRoomId);
+      await this.quizzRoomService.setQuestion({...cq, status: 'In Progress'}, quizzRoomId);
       this.currentQuestion++; 
     }
+  }
+
+  markQuestionAsCompleted() {
+
   }
 
   finishQuizzRoom() {

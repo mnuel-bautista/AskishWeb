@@ -8,7 +8,12 @@
     </ul>
     <div class="footer">
         <p>Respuestas 10/12</p>
-        <button mat-raised-button color="primary" *ngIf="currentQuestion != quizz?.questions?.length" (click)="setQuestion()">Continuar</button>
-        <button mat-raised-button color="primary" *ngIf="currentQuestion == quizz?.questions?.length" (click)="finishQuizzRoom()">Finalizar</button>
+        <button mat-raised-button color="primary" *ngIf="currentQuestion == quizz?.questions?.length; else continue" (click)="finishQuizzRoom()">Finalizar</button>
+        <ng-template #continue>
+            <button mat-raised-button color="primary" *ngIf="quizzRoom?.question?.status == 'In Progress'; else next" (click)="markQuestionAsCompleted()">Continuar</button>
+            <ng-template #next>
+                <button mat-raised-button color="primary" (click)="setQuestion()">Siguiente pregunta</button>
+            </ng-template>
+        </ng-template>
     </div>
 </div>

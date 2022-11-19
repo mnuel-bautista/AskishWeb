@@ -57,6 +57,7 @@ export class CuestionariosService {
       let answers = e.get('respuestas') as Object
 
       return <Question>{ 
+        questionId,
         question,
         description,
         correctAnswer, 

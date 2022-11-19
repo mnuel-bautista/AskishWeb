@@ -60,9 +60,21 @@ export class QuizzRoomsService {
     return doc.id
   }
 
-  async setQuestion(question: Question, quizzRoomId: string) {
+  async startQuizRoom(quizRoomId: string) {
+    await updateDoc(doc(this.firestore, 'salas', quizRoomId), {
+      estado_sala: 'In Progress'
+    })
+  }
+
+  async setQuestion(question: CurrentQuestion, quizzRoomId: string) {
     await updateDoc(doc(this.firestore, 'salas', quizzRoomId), {
       question : question 
+    })
+  }
+
+  async markQuestionAsCompleted(quizzRoomId: string) {
+    await updateDoc(doc(this.firestore, 'salas', quizzRoomId), {
+      estado_sala : 'Completed' 
     })
   }
 }

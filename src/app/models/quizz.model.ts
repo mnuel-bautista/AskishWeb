@@ -8,11 +8,12 @@ export interface Question {
     questionId: string, 
     question: string,
     description: string, 
-    correctAnswer: string, 
+    correctAnswer: string,
     answers: Answers
 }
 
 export interface CurrentQuestion {
+    questionId: string, 
     question: string,
     status: string, 
     description: string, 

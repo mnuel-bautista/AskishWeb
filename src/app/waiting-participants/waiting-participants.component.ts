@@ -22,7 +22,7 @@ export class WaitingParticipantsComponent implements OnInit {
     let groupName = localStorage.getItem('groupName')
     let quizzId = localStorage.getItem('quizzId')
     let quizzName = localStorage.getItem('quizzName')
-    let roomStatus = "En espera"
+    let roomStatus = "Not Started"
 
     let quizz = <QuizzRoom>{
       host,
@@ -37,7 +37,9 @@ export class WaitingParticipantsComponent implements OnInit {
     })
   }
 
-  async startQuizzRoom() {
+  async startQuizRoom() {
+    let quizRoomId = localStorage.getItem('quizzRoomId') ?? ""
+    await this.service.startQuizRoom(quizRoomId)
     this.router.navigate(['/sala']);
   }
 
