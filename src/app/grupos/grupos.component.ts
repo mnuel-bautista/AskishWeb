@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FirestoreService } from '../firebase/firestore.service';
 import { Group } from '../models/group.model';
@@ -17,14 +18,16 @@ export class GruposComponent implements OnInit {
 
   public grupos: Array<Group> = [] as Array<Group>;
 
-  public groupId: string | null = null;  
-
-  public group: { groupId: string, group: string, code: string } | null = null; 
+  public group: Group | null = null;
 
   public cuestionarios: Array<Quizz> = []
 
-  constructor(private auth: AuthService, private firestore: FirestoreService,
-    private dialog: MatDialog) { }
+  constructor(
+    private auth: AuthService,
+    private firestore: FirestoreService,
+    private dialog: MatDialog,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.auth.currentUser.subscribe((currentUser) => {
@@ -44,11 +47,20 @@ export class GruposComponent implements OnInit {
     this.dialog.open(NuevoGrupoComponent, { height: '250px', width: '420px' })
   }
 
-  async showGroupQuizzes(groupId: string) {
-    let quizzes = await this.firestore.getAllQuizzesByGroup(groupId)
+  async showGroupQuizzes(group: Group) {
+    let quizzes = await this.firestore.getAllQuizzesByGroup(group.groupId)
     this.cuestionarios = quizzes
+    this.group = group
 
     return null
+  }
+
+  startRoom(quizz: Quizz) {
+    localStorage.setItem('quizzId', quizz.quizzId)
+    localStorage.setItem('quizzName', quizz.name)
+    localStorage.setItem('groupId', this.group?.groupId ?? "")
+    localStorage.setItem('groupName', this.group?.name ?? "")
+    this.router.navigate(['/esperando'])
   }
 
 

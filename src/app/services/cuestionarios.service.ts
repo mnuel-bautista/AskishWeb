@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { getFirestore, collection, query, where, getDocs, addDoc, connectFirestoreEmulator } from '@firebase/firestore';
-import { Firebase } from '../firebase/firebase';
-import { Question } from '../models/quizz.model';
+import { collection, doc, query, where, getDocs, getDoc, addDoc } from '@firebase/firestore';
+import { Question, Quizz } from '../models/quizz.model';
 import { FirebaseService } from './firebase.service';
 
 @Injectable({
@@ -34,6 +33,37 @@ export class CuestionariosService {
   }
 
   async addQuestion(groupId: string, quizzId: string, question: Question) {
-    await addDoc(collection(this.firestore, `grupos/${groupId}/cuestionarios/${quizzId}/preguntas`), question)
+    await addDoc(collection(this.firestore, `grupos/${groupId}/cuestionarios/${quizzId}/preguntas`), {
+      pregunta: question.question, 
+      descripcion: question.description, 
+      respuestaCorrecta: question.correctAnswer, 
+      respuestas: question.answers, 
+    })
+  }
+
+  async getQuizz(groupId: string, quizzId: string): Promise<Quizz> {
+    let document = await getDoc(doc(this.firestore, `grupos/${groupId}/cuestionarios/${quizzId}`))
+
+    let name = document.get('cuestionario') as string
+
+    let qDocuments = await getDocs(collection(this.firestore, `grupos/${groupId}/cuestionarios/${quizzId}/preguntas`))
+
+    let questions = qDocuments.docs.map((e) => {
+
+      let questionId = e.id
+      let question = e.get('pregunta') as string
+      let description = e.get('descripcion') as string
+      let correctAnswer = e.get('respuestaCorrecta') as string
+      let answers = e.get('respuestas') as Object
+
+      return <Question>{ 
+        question,
+        description,
+        correctAnswer, 
+        answers 
+      }
+    })
+
+    return <Quizz>{ quizzId: document.id, name: name, questions: questions }
   }
 }

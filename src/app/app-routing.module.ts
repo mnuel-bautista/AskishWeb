@@ -6,6 +6,7 @@ import { GruposComponent } from './grupos/grupos.component';
 import { UserAuthenticatedGuard } from './guards/user-authenticated.guard';
 import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
 import { SignupComponent } from './signup/signup.component';
+import { WaitingParticipantsComponent } from './waiting-participants/waiting-participants.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/grupos', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'grupos', component: GruposComponent, canActivate: [UserAuthenticatedGuard] },
   { path: 'cuestionarios/crear', component: NuevoCuestionarioComponent },
+  { path: 'esperando', component: WaitingParticipantsComponent }, 
   { path: "sala", component: QuizzRoomComponent }
 ];
 

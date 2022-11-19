@@ -4,7 +4,7 @@
         <p class="mat-subheading-2">Grupos</p>
         <button mat-stroked-button color="primary" (click)="createGroup()">Nuevo grupo</button>
         <mat-nav-list>
-            <a mat-list-item *ngFor="let grupo of grupos" (click)="showGroupQuizzes(grupo.groupId)"> {{ grupo.name  }} </a>
+            <a mat-list-item *ngFor="let grupo of grupos" (click)="showGroupQuizzes(grupo)"> {{ grupo.name  }} </a>
         </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content style="max-height: 100vh">
@@ -14,7 +14,7 @@
                     <mat-card-title class="mat-subheading-2">{{ cuestionario?.name }}</mat-card-title>
                     <mat-card-subtitle>{{ 10 }} pregunta(s)</mat-card-subtitle>
                     <mat-card-actions align="end">
-                        <button mat-stroked-button color="primary">Iniciar sala</button>
+                        <button mat-stroked-button color="primary" (click)="startRoom(cuestionario)">Iniciar sala</button>
                     </mat-card-actions>
                 </mat-card>
             </ng-container>

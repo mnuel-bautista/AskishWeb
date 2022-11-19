@@ -1,10 +1,20 @@
 export interface Quizz { 
+    quizzId: string, 
     name: string, 
     questions: Array<Question>
 }
 
 export interface Question {
+    questionId: string, 
     question: string,
+    description: string, 
+    correctAnswer: string, 
+    answers: Answers
+}
+
+export interface CurrentQuestion {
+    question: string,
+    status: string, 
     description: string, 
     correctAnswer: string, 
     answers: Answers

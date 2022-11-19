@@ -72,7 +72,7 @@ export class NuevoCuestionarioComponent implements OnInit {
       d: this.dFormControl.value ?? "", 
     } 
 
-    let qt = { question, description, correctAnswer, answers }; 
+    let qt = { questionId: "", question, description, correctAnswer, answers }; 
 
     await this.service.addQuestion(this.groupDocumentId ?? "", this.quizzDocumentId ?? "", qt)
 

@@ -92,7 +92,7 @@ export class FirestoreService {
       let name = document.get('cuestionario') as string 
       let questions = document.get('preguntas') as Array<Question>
 
-      return <Quizz>{ name: name, questions: questions}
+      return <Quizz>{ quizzId: document.id, name: name, questions: questions}
     })
 
     return quizzes 

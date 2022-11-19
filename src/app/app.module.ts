@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NuevoGrupoComponent } from './grupos/nuevo-grupo/nuevo-grupo.component';
 import { NuevoCuestionarioComponent } from './cuestionarios/nuevo-cuestionario/nuevo-cuestionario.component';
 import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
+import { WaitingParticipantsComponent } from './waiting-participants/waiting-participants.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
     NuevoGrupoComponent,
     NuevoCuestionarioComponent,
     QuizzRoomComponent,
+    WaitingParticipantsComponent,
   ],
   imports: [
     BrowserModule,
