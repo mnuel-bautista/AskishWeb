@@ -22,6 +22,7 @@ import { NuevoGrupoComponent } from './grupos/nuevo-grupo/nuevo-grupo.component'
 import { NuevoCuestionarioComponent } from './cuestionarios/nuevo-cuestionario/nuevo-cuestionario.component';
 import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
 import { WaitingParticipantsComponent } from './waiting-participants/waiting-participants.component';
+import { GroupCodeComponent } from './grupos/group-code/group-code.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { WaitingParticipantsComponent } from './waiting-participants/waiting-par
     NuevoCuestionarioComponent,
     QuizzRoomComponent,
     WaitingParticipantsComponent,
+    GroupCodeComponent,
   ],
   imports: [
     BrowserModule,

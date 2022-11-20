@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { FirestoreService } from '../firebase/firestore.service';
 import { Group } from '../models/group.model';
 import { Quizz } from '../models/quizz.model';
+import { GroupCodeComponent } from './group-code/group-code.component';
 import { NuevoGrupoComponent } from './nuevo-grupo/nuevo-grupo.component';
 
 @Component({
@@ -45,6 +46,10 @@ export class GruposComponent implements OnInit {
 
   createGroup() {
     this.dialog.open(NuevoGrupoComponent, { height: '250px', width: '420px' })
+  }
+
+  showGroupCode(code: string) {
+    this.dialog.open(GroupCodeComponent, { height: '225px', width: '420px', data: { code } })
   }
 
   async showGroupQuizzes(group: Group) {

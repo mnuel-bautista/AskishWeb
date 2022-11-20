@@ -3,7 +3,12 @@ mat-drawer {
     height: 100%;
     padding-left: 40px;
     padding-right: 40px;
-    padding-top: 40px;
+    padding-top: 1.25rem;
+}
+
+.groups-title {
+    font-size: 1.25rem;
+    margin-bottom: 2.7rem;
 }
 
 mat-drawer button {
@@ -12,6 +17,7 @@ mat-drawer button {
 
 mat-drawer-content {
     overflow-y: scroll;
+    padding: 20px 40px; 
 }
 
 mat-drawer-content button[mat-fab] {
@@ -20,11 +26,24 @@ mat-drawer-content button[mat-fab] {
     bottom: 10px; 
 }
 
-.container-preguntas {
-    padding: 40px;
+.questions-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 2rem;
     row-gap: 2rem;
+}
+
+.welcome {
+    font-size: 1.25rem;
+    padding: 0px;
+    margin: 0px; 
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
 }
 
