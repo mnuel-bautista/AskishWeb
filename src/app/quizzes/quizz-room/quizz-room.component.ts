@@ -51,16 +51,21 @@ export class QuizzRoomComponent implements OnInit {
     }
   }
 
-  markQuestionAsCompleted() {
-
+  async markQuestionAsCompleted() {
+    let quizRoomId = localStorage.getItem('quizzRoomId')!
+    await this.quizzRoomService.markQuestionAsCompleted(quizRoomId)
   }
 
-  finishQuizzRoom() {
+  async finishQuizzRoom() {
+    let quizRoomId = localStorage.getItem('quizzRoomId') ?? ''
+    this.quizzRoomService.markQuizRoomAsCompleted(quizRoomId)
     localStorage.removeItem('groupId')
     localStorage.removeItem('groupName')
     localStorage.removeItem('quizzId')
     localStorage.removeItem('quizzRoomId')
     localStorage.removeItem('quizzName')
+
+   
     this.router.navigate(['/grupos'])
   }
 

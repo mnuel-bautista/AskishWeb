@@ -72,8 +72,14 @@ export class QuizzRoomsService {
     })
   }
 
-  async markQuestionAsCompleted(quizzRoomId: string) {
-    await updateDoc(doc(this.firestore, 'salas', quizzRoomId), {
+  async markQuestionAsCompleted(quizRoomId: string) {
+    await updateDoc(doc(this.firestore, `salas`, quizRoomId), {
+      "question.status" : 'Completed' 
+    })
+  }
+
+  async markQuizRoomAsCompleted(quizRoomId: string) {
+    await updateDoc(doc(this.firestore, `salas`, quizRoomId), {
       estado_sala : 'Completed' 
     })
   }
