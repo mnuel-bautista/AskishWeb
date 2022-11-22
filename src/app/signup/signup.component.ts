@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-//import { Auth, updateCurrentUser, updateProfile } from '@angular/fire/auth';
-//import { collection, Firestore } from '@angular/fire/firestore';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-//import { addDoc, doc } from '@firebase/firestore';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
