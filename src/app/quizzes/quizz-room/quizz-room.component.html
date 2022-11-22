@@ -1,10 +1,15 @@
 <div class="container">
     <div>
-        <h1>{{quizzRoom?.quizz?.name}}</h1>
-        <h2>{{quizzRoom?.question?.question}}</h2>
+        <h1>{{quizzRoom?.question?.question}}</h1>
+        <h2>{{quizzRoom?.quizz?.name}}</h2>
     </div>
     <ul>
-        <li *ngFor="let answer of answers">{{answer[1]}}</li>
+        <li *ngFor="let answer of answers">
+            <div>
+                <span>{{answer[0]}}</span>
+                <p>{{answer[1]}}</p>
+            </div>
+        </li>
     </ul>
     <div class="footer">
         <p>Respuestas 10/12</p>
