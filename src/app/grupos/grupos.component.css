@@ -1,18 +1,29 @@
 mat-drawer {
-    width: 326px;
+    width: 17.5rem;
     height: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     padding-top: 1.25rem;
+}
+
+.group-selected {
+    background-color: #6b63ff34;
+    border-radius: .5rem;
+    color: #181649
+}
+
+mat-nav-list a {
 }
 
 .groups-title {
     font-size: 1.25rem;
-    margin-bottom: 2.7rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
 }
 
 mat-drawer button {
     width: 100%;
+    margin-bottom: 2rem;
 }
 
 mat-drawer-content {
@@ -37,6 +48,11 @@ mat-drawer-content button[mat-fab] {
     font-size: 1.25rem;
     padding: 0px;
     margin: 0px; 
+}
+
+.welcome span {
+    color: #6b63ff;
+    font-weight: 500;
 }
 
 .top-bar {
