@@ -20,14 +20,14 @@ export class WaitingParticipantsComponent implements OnInit {
     let host = localStorage.getItem('userId')
     let groupId = localStorage.getItem('groupId')
     let groupName = localStorage.getItem('groupName')
-    let quizzId = localStorage.getItem('quizzId')
+    let quizId = localStorage.getItem('quizzId')
     let quizzName = localStorage.getItem('quizzName')
     let roomStatus = "Not Started"
 
     let quizz = <QuizzRoom>{
       host,
       group: { groupId, name: groupName },
-      quizz: { quizzId, name: quizzName },
+      quiz: { quizId, name: quizzName },
       quizzRoomStatus: roomStatus,
       guests: { "jaYl9hlDSAHCTWzA2ez5YWc1VhrQ": true },
       participants: {}

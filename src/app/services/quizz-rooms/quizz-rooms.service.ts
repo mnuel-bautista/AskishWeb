@@ -27,8 +27,8 @@ export class QuizzRoomsService {
       let host = doc.get('anfitrion') as string
       let groupId = doc.get('grupo.id_grupo') as string
       let groupName = doc.get('grupo.nombre') as string
-      let quizzId = doc.get('cuestionario.id_cuestionario') as string
-      let quizzName = doc.get('cuestionario.nombre') as string
+      let quizId = doc.get('cuestionario.id_cuestionario') as string
+      let quizName = doc.get('cuestionario.nombre') as string
       let quizzStatus = doc.get('estado_sala') as string
       let question = doc.get('question') as CurrentQuestion
       let guests = doc.get('invitados') as Object
@@ -37,7 +37,7 @@ export class QuizzRoomsService {
       this.quizzRoom$.next(<QuizzRoom>{
         host,
         group: { groupId, name: groupName },
-        quizz: { quizzId, name: quizzName },
+        quiz: { quizId, name: quizName },
         quizzRoomStatus: quizzStatus,
         question: question,
         guests,
@@ -48,14 +48,7 @@ export class QuizzRoomsService {
 
   async createQuizzRoom(room: QuizzRoom): Promise<string> {
 
-    let doc = await addDoc(collection(this.firestore, 'salas'), {
-      anfitrion: room.host, 
-      grupo: { id_grupo: room.group.groupId, nombre: room.group.name },
-      cuestionario: { id_cuestionario: room.quizz.quizzId, nombre: room.quizz.name },
-      estado_sala: room.quizzRoomStatus,
-      invitados: { "jaYl9hlDSAHCTWzA2ez5YWc1VhrQ": true },
-      participantes: {}
-    })
+    let doc = await addDoc(collection(this.firestore, 'salas'), { ...room })
 
     return doc.id
   }
@@ -80,7 +73,7 @@ export class QuizzRoomsService {
 
   async markQuizRoomAsCompleted(quizRoomId: string) {
     await updateDoc(doc(this.firestore, `salas`, quizRoomId), {
-      estado_sala : 'Completed' 
+      quizzRoomStatus : 'Completed' 
     })
   }
 }
