@@ -38,10 +38,10 @@ export class FirestoreService {
     let userId = localStorage.getItem('userId')
     
     let groupCode = this.makeid(6)
-    await addDoc(collection(this.firestore, 'grupos'), {
-      nombre: group, 
-      creador: userId, 
-      codigo: groupCode, 
+    await addDoc(collection(this.firestore, 'groups'), {
+      group, 
+      creator: userId, 
+      code: groupCode, 
     })
   }
 
@@ -64,15 +64,15 @@ export class FirestoreService {
 
     if (userId != null) {
 
-      let ref = collection(this.firestore, 'grupos')
-      let qr = query(ref, where("creador", "==", userId))
+      let ref = collection(this.firestore, 'groups')
+      let qr = query(ref, where("creator", "==", userId))
 
       onSnapshot(qr, (snapshot) => {
         let docs = snapshot.docs
         let grupos = docs.map((element) => {
           let groupId = element.id as string;
-          let name = element.get('nombre') as string
-          let code = element.get('codigo') as string
+          let name = element.get('group') as string
+          let code = element.get('code') as string
           let creator = element.get('creator') as string
   
           return { groupId, code, creator, name }
@@ -85,12 +85,12 @@ export class FirestoreService {
 
   async getAllQuizzesByGroup(groupId: string): Promise<Quizz[]> {
 
-    let ref = collection(this.firestore, `grupos/${groupId}/cuestionarios`)
+    let ref = collection(this.firestore, `groups/${groupId}/quizzes`)
     let documents = await getDocs(ref)
 
     let quizzes = documents.docs.map((document) => {
-      let name = document.get('cuestionario') as string 
-      let questions = document.get('preguntas') as Array<Question>
+      let name = document.get('quiz') as string 
+      let questions = document.get('questions') as Array<Question>
 
       return <Quizz>{ quizzId: document.id, name: name, questions: questions}
     })
