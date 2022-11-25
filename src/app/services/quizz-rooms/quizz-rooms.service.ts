@@ -24,15 +24,15 @@ export class QuizzRoomsService {
   async getQuizzRoom(quizzRoomId: string) {
     onSnapshot(doc(this.firestore, 'salas', quizzRoomId), (doc) => {
 
-      let host = doc.get('anfitrion') as string
-      let groupId = doc.get('grupo.id_grupo') as string
-      let groupName = doc.get('grupo.nombre') as string
-      let quizId = doc.get('cuestionario.id_cuestionario') as string
-      let quizName = doc.get('cuestionario.nombre') as string
-      let quizzStatus = doc.get('estado_sala') as string
+      let host = doc.get('host') as string
+      let groupId = doc.get('group.groupId') as string
+      let groupName = doc.get('group.name') as string
+      let quizId = doc.get('quiz.quizId') as string
+      let quizName = doc.get('quiz.name') as string
+      let quizzStatus = doc.get('quizRoomStatus') as string
       let question = doc.get('question') as CurrentQuestion
-      let guests = doc.get('invitados') as Object
-      let participants = doc.get('participantes') as Object
+      let guests = doc.get('guests') as Object
+      let participants = doc.get('participants') as Object
 
       this.quizzRoom$.next(<QuizzRoom>{
         host,
