@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firebase } from './firebase';
-import { getFirestore, collection, query, where, getDocs, connectFirestoreEmulator } from '@firebase/firestore';
+import { getFirestore, collection, query, doc, getDoc,  where, getDocs, connectFirestoreEmulator } from '@firebase/firestore';
 import { addDoc, onSnapshot } from '@firebase/firestore';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { BehaviorSubject } from 'rxjs';
@@ -26,35 +26,56 @@ export class FirestoreService {
     connectAuthEmulator(this.auth, "http://localhost:9099")
     connectFirestoreEmulator(this.firestore, 'localhost', 8080);
 
-    this.getAllGroupsByUser().then(()=> {
+    this.getAllGroupsByUser().then(() => {
 
     }).catch((error) => {
-      alert(error); 
+      alert(error);
     })
   }
 
   async createGroup(group: string) {
 
     let userId = localStorage.getItem('userId')
-    
+
     let groupCode = this.makeid(6)
     await addDoc(collection(this.firestore, 'groups'), {
-      group, 
-      creator: userId, 
-      code: groupCode, 
+      group,
+      creator: userId,
+      code: groupCode,
     })
   }
 
   private makeid(length: number) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    
+
     return result;
-}
+  }
+
+  async getGroup(groupId: string | null): Promise<Group | null> {
+
+    let userId = localStorage.getItem('userId')
+
+    if (userId != null) {
+
+      let document = doc(this.firestore, `groups/${groupId}`)
+      let quiz = await getDoc(document)
+
+      let gpId = quiz.id as string;
+      let name = quiz.get('group') as string
+      let code = quiz.get('code') as string
+      let creator = quiz.get('creator') as string
+      let members = quiz.get('members') as Object
+
+      return <Group>{ groupId: gpId, code, creator, name, members }
+    }
+
+    return null
+  }
 
 
   //Obtiene todos los grupos del usuario que ha iniciado sesión.
@@ -74,10 +95,11 @@ export class FirestoreService {
           let name = element.get('group') as string
           let code = element.get('code') as string
           let creator = element.get('creator') as string
-  
-          return { groupId, code, creator, name }
+          let members = element.get('members') as Object
+
+          return { groupId, code, creator, name, members }
         })
-  
+
         this.$grupos.next(grupos)
       })
     }
@@ -89,13 +111,13 @@ export class FirestoreService {
     let documents = await getDocs(ref)
 
     let quizzes = documents.docs.map((document) => {
-      let name = document.get('quiz') as string 
+      let name = document.get('quiz') as string
       let questions = document.get('questions') as Array<Question>
 
-      return <Quizz>{ quizzId: document.id, name: name, questions: questions}
+      return <Quizz>{ quizzId: document.id, name: name, questions: questions }
     })
 
-    return quizzes 
+    return quizzes
   }
 
 }

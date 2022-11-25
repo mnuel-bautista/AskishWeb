@@ -55,7 +55,7 @@ export class QuizzRoomsService {
 
   async startQuizRoom(quizRoomId: string) {
     await updateDoc(doc(this.firestore, 'salas', quizRoomId), {
-      estado_sala: 'In Progress'
+      quizRoomStatus: 'In Progress'
     })
   }
 
