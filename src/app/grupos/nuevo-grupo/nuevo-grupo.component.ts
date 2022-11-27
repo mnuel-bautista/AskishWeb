@@ -24,9 +24,7 @@ export class NuevoGrupoComponent implements OnInit {
       return
     }
     await this.db.createGroup(this.nameFormControl.value)
+    alert("Se ha creado el grupo")
     this.dialog.closeAll();
-    this.dialog.afterAllClosed.subscribe(() => {
-      alert("Se ha creado el grupo")
-    })
   }
 }
