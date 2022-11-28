@@ -6,6 +6,10 @@ mat-drawer {
     padding-top: 1.25rem;
 }
 
+mat-drawer img {
+    height: 2.5rem;
+}
+
 .group-selected {
     background-color: #6b63ff34;
     border-radius: .5rem;
