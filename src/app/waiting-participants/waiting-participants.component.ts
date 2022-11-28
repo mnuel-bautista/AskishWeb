@@ -31,7 +31,7 @@ export class WaitingParticipantsComponent implements OnInit {
         host,
         group: { groupId, name: groupName },
         quiz: { quizId, name: quizzName },
-        quizzRoomStatus: roomStatus,
+        quizRoomStatus: roomStatus,
         guests: group?.members,
         participants: {}
       }

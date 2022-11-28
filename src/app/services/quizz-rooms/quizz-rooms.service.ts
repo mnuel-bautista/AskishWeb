@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { QuizzRoom } from 'src/app/models/quizz-room.model';
+import { QuestionResult, QuizzRoom } from 'src/app/models/quizz-room.model';
 
-import { collection, doc, updateDoc, onSnapshot, addDoc, connectFirestoreEmulator } from '@firebase/firestore';
+import { collection, doc, updateDoc, onSnapshot, addDoc, getDoc } from '@firebase/firestore';
 import { FirebaseService } from '../firebase.service';
 import { Subject, ReplaySubject } from 'rxjs';
 import { CurrentQuestion, Question } from 'src/app/models/quizz.model';
@@ -38,7 +38,7 @@ export class QuizzRoomsService {
         host,
         group: { groupId, name: groupName },
         quiz: { quizId, name: quizName },
-        quizzRoomStatus: quizzStatus,
+        quizRoomStatus: quizzStatus,
         question: question,
         guests,
         participants,
@@ -61,19 +61,33 @@ export class QuizzRoomsService {
 
   async setQuestion(question: CurrentQuestion, quizzRoomId: string) {
     await updateDoc(doc(this.firestore, 'salas', quizzRoomId), {
-      question : question 
+      question: question
     })
   }
 
   async markQuestionAsCompleted(quizRoomId: string) {
     await updateDoc(doc(this.firestore, `salas`, quizRoomId), {
-      "question.status" : 'Completed' 
+      "question.status": 'Completed'
     })
   }
 
   async markQuizRoomAsCompleted(quizRoomId: string) {
     await updateDoc(doc(this.firestore, `salas`, quizRoomId), {
-      quizzRoomStatus : 'Completed' 
+      quizRoomStatus: 'Completed'
     })
   }
+
+  async getResults(quizRoomId: string, questionId: string): Promise<QuestionResult> {
+
+    let document = await getDoc(doc(this.firestore, `salas/${quizRoomId}/results/${questionId}`))
+
+    let question = document.get('question') as string | null ?? ""
+    let a = Object.keys(document.get('a') as Object | undefined ?? {}).length
+    let b = Object.keys(document.get('b') as Object | undefined ?? {}).length
+    let c = Object.keys(document.get('c') as Object | undefined ?? {}).length
+    let d = Object.keys(document.get('d') as Object | undefined ?? {}).length
+
+    return { question, a, b, c, d }
+  }
+
 }

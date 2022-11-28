@@ -23,6 +23,7 @@ import { NuevoCuestionarioComponent } from './cuestionarios/nuevo-cuestionario/n
 import { QuizzRoomComponent } from './quizzes/quizz-room/quizz-room.component';
 import { WaitingParticipantsComponent } from './waiting-participants/waiting-participants.component';
 import { GroupCodeComponent } from './grupos/group-code/group-code.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { GroupCodeComponent } from './grupos/group-code/group-code.component';
     MatDialogModule,
     MatRadioModule,
     MatOptionModule,
-    MatSelectModule, 
+    MatSelectModule,
+    NgChartsModule, 
   ],
   providers: [Firebase],
   bootstrap: [AppComponent]
