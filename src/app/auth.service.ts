@@ -42,7 +42,7 @@ export class AuthService {
         })
     
 
-      let userQuery = query(collection(this.firestore, 'usuarios'), where("email", "==", email))
+      let userQuery = query(collection(this.firestore, 'users'), where("email", "==", email))
       let user = (await getDocs(userQuery)).docs[0]
 
       localStorage.setItem('userId', user.id)
@@ -54,9 +54,9 @@ export class AuthService {
   async createUser(displayName: string, email: string, password: string) {
     let userCredential = await createUserWithEmailAndPassword(this.auth, email, password)
     localStorage.setItem('userId', userCredential.user.uid)
-    await setDoc(doc(this.firestore, "usuarios", userCredential.user.uid), {
-      "nombre": displayName,
-      "email": email,
+    await setDoc(doc(this.firestore, "users", userCredential.user.uid), {
+      name: displayName,
+      email: email,
     })
     await updateProfile(userCredential.user, { displayName: displayName })
   }

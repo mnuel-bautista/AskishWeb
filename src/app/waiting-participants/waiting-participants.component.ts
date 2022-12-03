@@ -14,6 +14,7 @@ import { QuizzRoomsService } from '../services/quizz-rooms/quizz-rooms.service';
 export class WaitingParticipantsComponent implements OnInit {
 
   constructor(private service: QuizzRoomsService,
+    private groupsService: FirestoreService, 
     private router: Router) { }
 
   ngOnInit(): void {
@@ -24,17 +25,24 @@ export class WaitingParticipantsComponent implements OnInit {
     let quizzName = localStorage.getItem('quizzName')
     let roomStatus = "Not Started"
 
-    let quizz = <QuizzRoom>{
-      host,
-      group: { groupId, name: groupName },
-      quiz: { quizId, name: quizzName },
-      quizzRoomStatus: roomStatus,
-      guests: { "jaYl9hlDSAHCTWzA2ez5YWc1VhrQ": true },
-      participants: {}
-    }
-    this.service.createQuizzRoom(quizz).then((e) => {
-      localStorage.setItem('quizzRoomId', e)
+   
+    this.groupsService.getGroup(groupId).then((group) => {
+      let quizz = <QuizzRoom>{
+        host,
+        group: { groupId, name: groupName },
+        quiz: { quizId, name: quizzName },
+        quizRoomStatus: roomStatus,
+        guests: group?.members,
+        participants: {}
+      }
+
+      return quizz
+    }).then((quizRoom) => {
+      this.service.createQuizzRoom(quizRoom).then((e) => {
+        localStorage.setItem('quizzRoomId', e)
+      })
     })
+    
   }
 
   async startQuizRoom() {

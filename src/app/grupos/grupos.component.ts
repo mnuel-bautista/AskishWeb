@@ -40,6 +40,9 @@ export class GruposComponent implements OnInit {
 
     this.firestore.grupos.subscribe((values) => {
       this.grupos = values
+      if(values.length > 0) {
+        this.showGroupQuizzes(values[0])
+      }
     })
   }
 

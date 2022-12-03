@@ -19,8 +19,6 @@ export class FirebaseService {
   constructor() {
     this.firestore = getFirestore(this.app)
     this.auth = getAuth(this.app)
-    connectAuthEmulator(this.auth, "http://localhost:9099")
-    connectFirestoreEmulator(this.firestore, 'localhost', 8080);
 
   }
 }
